@@ -208,8 +208,12 @@ class Assertion
      */
     protected static function createException($value, $message, $code,$exception, $propertyPath, array $constraints = array())
     {
-        $exceptionClass = $exception ?: static::$exceptionClass;
-        return new $exceptionClass($message, $code,$exception, $propertyPath, $value, $constraints);
+        if(!$exception){
+            $exception = static::$exceptionClass;
+            return new $exception($message, $code, $propertyPath, $value, $constraints);
+        }
+        return new $exception($message,$code);
+
     }
 
     /**
